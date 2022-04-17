@@ -5,7 +5,6 @@ import java.util.*;
 public class Task1 {
     File file;
     StringBuffer data;
-//    ArrayList<Data> dataArrayList;
     FileWriter fileTask1Writer = null;
     FileInputStream fileTask1Reader = null;
 
@@ -56,17 +55,15 @@ public class Task1 {
         int dataInfo;
         try {
             fileTask1Reader = new FileInputStream(file);
-            StringBuffer temp = new StringBuffer();
+            StringBuilder temp = new StringBuilder();
             while ((dataInfo = fileTask1Reader.read()) != -1) {
                 temp.append((char)dataInfo);
             }
-            String[] temp2 = temp.toString().split("=");
+            String[] temp2 = temp.toString().split("[=\n]");
             for (String i : temp2) {
                 if (i.equals(value)) {
-                    System.out.println("111");
                     return i;
                 }
-                System.out.println(i); //потом не забыть убрать эту строчку
             }
         } catch (IOException e) {
             e.printStackTrace();
