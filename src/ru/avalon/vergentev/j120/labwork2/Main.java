@@ -25,6 +25,9 @@ public class Main {
         System.out.print('\n');
         System.out.println("Check is there set value in file:");
         System.out.println(task1.finderValue("value3"));
+        System.out.print('\n');
+        System.out.println("Change element in a file:");
+        task1.finderValueAndRename("value3", "value27"); //меняем значение одно на другое
 
 
         //формируем произвольные данные, которые помещаем в StringBuilder

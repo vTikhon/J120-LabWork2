@@ -78,6 +78,36 @@ public class Task1 {
         return null;
     }
 
+    //метод нахождения заданного значения в данных
+    public void finderValueAndRename (String value, String value2) {
+        int dataInfo;
+        try {
+            fileTask1Reader = new FileInputStream(file);
+            StringBuilder temp = new StringBuilder();
+            while ((dataInfo = fileTask1Reader.read()) != -1) {
+                temp.append((char)dataInfo);
+            }
+            String[] temp2 = temp.toString().split("[=\n]");
+            StringBuilder temp3 = new StringBuilder();
+            for (String i : temp2) {
+                if (i.equals(value)) {
+                    i = value2;
+                }
+                temp3.append(i + "=").append('\n');
+            }
+            System.out.println(temp3);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                assert fileTask1Reader != null;
+                fileTask1Reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
