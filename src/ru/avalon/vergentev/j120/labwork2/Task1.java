@@ -1,22 +1,24 @@
 package ru.avalon.vergentev.j120.labwork2;
 import java.io.*;
+import java.util.*;
 
 public class Task1 {
     File file;
-    StringBuilder values;
+    StringBuffer data;
+//    ArrayList<Data> dataArrayList;
     FileWriter fileTask1Writer = null;
     FileInputStream fileTask1Reader = null;
 
-    public Task1(File file, StringBuilder values) {
+    public Task1(File file, StringBuffer data) {
         this.file = file;
-        this.values = values;
+        this.data = data;
     }
 
     //записываем в файл произвольные данные
     public void writer () {
         try {
             fileTask1Writer = new FileWriter(file, false);
-            fileTask1Writer.write(values.toString());
+            fileTask1Writer.write(data.toString());
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -30,14 +32,13 @@ public class Task1 {
     }
 
     //печатаем данные из файла в консоль
-    public void print () {
-        int valuesInfo;
+    public void printInConsole () {
+        int dataInfo;
         try {
             fileTask1Reader = new FileInputStream(file);
-            while ((valuesInfo = fileTask1Reader.read()) != -1) {
-                System.out.print((char)valuesInfo);
+            while ((dataInfo = fileTask1Reader.read()) != -1) {
+                System.out.print((char)dataInfo);
             }
-            System.out.println(fileTask1Reader.read());
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -50,5 +51,46 @@ public class Task1 {
         }
     }
 
+    //метод нахождения заданного значения в данных
+    public String finderValue (String value) {
+        int dataInfo;
+        try {
+            fileTask1Reader = new FileInputStream(file);
+            StringBuffer temp = new StringBuffer();
+            while ((dataInfo = fileTask1Reader.read()) != -1) {
+                temp.append((char)dataInfo);
+            }
+            String[] temp2 = temp.toString().split("=");
+            for (String i : temp2) {
+                if (i.equals(value)) {
+                    System.out.println("111");
+                    return i;
+                }
+                System.out.println(i); //потом не забыть убрать эту строчку
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                assert fileTask1Reader != null;
+                fileTask1Reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task1 task1 = (Task1) o;
+        return Objects.equals(file, task1.file) && Objects.equals(data, task1.data) && Objects.equals(fileTask1Writer, task1.fileTask1Writer) && Objects.equals(fileTask1Reader, task1.fileTask1Reader);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, data, fileTask1Writer, fileTask1Reader);
+    }
 }
