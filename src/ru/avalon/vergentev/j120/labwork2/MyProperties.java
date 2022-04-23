@@ -2,6 +2,7 @@ package ru.avalon.vergentev.j120.labwork2;
 import java.io.*;
 import java.util.*;
 
+//ÇÀÄÀÍÈÅ 1 - ÑÎÇÄÀ¨Ì ÊËÀÑÑ ÀÍÀËÎÃÈ×ÍÛÉ ÁÈÁËÈÎÒÅ×ÍÎÌÓ Properties (íå èñïîëüçóÿ Properties)
 public class MyProperties {
     File file;
     FileReader fileReader;
