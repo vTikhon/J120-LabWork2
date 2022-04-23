@@ -17,11 +17,9 @@ public class MyProperties {
         try {
             File file = new File("FileForTask1.txt");
             fileAbsolute = file.getAbsoluteFile();
-            if (!file.exists()) {
-                fileWriter = new FileWriter(file);
-                fileWriter.append("#").append(new Date().toString()).append('\n');
-                fileWriter.close();
-            }
+            fileWriter = new FileWriter(file);
+            fileWriter.append("#").append(new Date().toString()).append('\n');
+            fileWriter.close();
             int symbolExisting;
             fileReader = new FileReader(file);
             data = new StringBuilder();
@@ -65,7 +63,6 @@ public class MyProperties {
             file = fileAbsolute;
         }
         if (!file.exists() || !file.canRead())  throw new SecurityException("File can't be readable or doesn't exist !!!");
-
         try {
             int symbolExisting;
             fileReader = new FileReader(file.getAbsoluteFile());
