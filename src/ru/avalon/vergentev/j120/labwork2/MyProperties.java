@@ -4,41 +4,53 @@ import java.util.*;
 
 //ЗАДАНИЕ 1 - СОЗДАЁМ КЛАСС MyProperties АНАЛОГИЧНЫЙ БИБЛИОТЕЧНОМУ Properties
 public class MyProperties {
-    File file;
+    File file, fileAbsolute;
     FileReader fileReader;
     FileWriter fileWriter;
     Map<String, String> map;
     StringBuilder data;
-    String[] title;
+    String[] dataInLines;
 
 
     //CONSTRUCTORS
     public MyProperties() {
         try {
-            fileWriter = new FileWriter("fileForTask1.txt");
-            fileWriter.append("#").append(new Date().toString()).append('\n');
-            fileWriter.close();
+            File file = new File("FileForTask1.txt");
+            fileAbsolute = file.getAbsoluteFile();
+            if (!file.exists()) {
+                fileWriter = new FileWriter(file);
+                fileWriter.append("#").append(new Date().toString()).append('\n');
+                fileWriter.close();
+            }
+            int symbolExisting;
+            fileReader = new FileReader(file);
+            data = new StringBuilder();
+            while ((symbolExisting = fileReader.read()) != -1) {
+                data.append((char)symbolExisting);
+            }
+            dataInLines = data.toString().split("\n", -1);  //запишем в массив каждую строку отдельно для того чтобы потом пропустить или вернуть заголовок
             map = new HashMap<>();
+            fileReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public MyProperties(File file) throws SecurityException {
+    public MyProperties(File file) {
         try {
             this.file = file;
             if (!file.exists() || !file.canRead()) throw new SecurityException("File doesn't exist or can't be readable !!!");
-            int dataExisting;
+            int symbolExisting;
             fileReader = new FileReader(file);
             data = new StringBuilder();
-            while ((dataExisting = fileReader.read()) != -1) {
-                data.append((char)dataExisting);
+            while ((symbolExisting = fileReader.read()) != -1) {
+                data.append((char)symbolExisting);
             }
-            title = data.toString().split("[\n]");  //запишем в массив каждую строку отдельно для того чтобы потом пропустить или вернуть заголовок
+            dataInLines = data.toString().split("\n", -1);  //запишем в массив каждую строку отдельно для того чтобы потом пропустить или вернуть заголовок
             map = new HashMap<>();
-            for (int i = 2; i < title.length; i++) {   //пропускаем заголовок и пустую строку
-                new StringBuilder().append(title[i]);
-                String[] temp = title[i].split("[=]");
+            for (int i = 2; i < dataInLines.length; i++) {   //пропускаем заголовок и пустую строку
+                new StringBuilder().append(dataInLines[i]);
+                String[] temp = dataInLines[i].split("=");
                 map.put(temp[0], temp[1]);    //помешаем ключ и значение в подходящую коллекцию HashMap
             }
             fileReader.close();
@@ -49,12 +61,16 @@ public class MyProperties {
 
     //METHODS
     public void printFileDataInConsole () {
-        if (!file.exists() || !file.canRead())  throw new SecurityException("File can't be readable");
-        int dataInfo;
+        if (file == null) {
+            file = fileAbsolute;
+        }
+        if (!file.exists() || !file.canRead())  throw new SecurityException("File can't be readable or doesn't exist !!!");
+
         try {
-            fileReader = new FileReader(file);
-            while ((dataInfo = fileReader.read()) != -1) {
-                System.out.print((char)dataInfo);
+            int symbolExisting;
+            fileReader = new FileReader(file.getAbsoluteFile());
+            while ((symbolExisting = fileReader.read()) != -1) {
+                System.out.print((char)symbolExisting);
             }
             fileReader.close();
         } catch (IOException e) {
@@ -63,35 +79,39 @@ public class MyProperties {
     }
 
     //записываем в файл произвольные данные
-    public void myPut (String key, String value) {
+    public void put (String key, String value) {
         map.put(key, value);
     }
 
-    public String myGet (String key) {
+    public String get (String key) {
         return map.get(key);
     }
 
-    public void myReplace (String key, String value) {
-        if (map.get(key) != null) map.put(key, value);
+    public void replace (String key, String value) {
+        if (map.get(key) != null) map.replace(key, value);
     }
 
-    public void myRemove (String key) {
+    public void remove (String key) {
         map.remove(key);
     }
 
-    public boolean myExists (String key) {
+    public boolean exists (String key) {
         return map.get(key) != null;
     }
 
-    public void myStore () {
-        if (!file.exists() || !file.canWrite())  throw new SecurityException("File can't be writable or doesn't exist !!!");
-        try {
-            System.out.println("i am crying");
-            data = new StringBuilder();
-            data.append(title[0]).append('\n').append(title[1]);
-            for (Object i : map.keySet()){
-                data.append('\n').append(i).append("=").append(map.get(i));
+    public void store () {
+        if (file == null) {
+            file = fileAbsolute;
         }
+        if (!file.exists() || !file.canWrite()) throw new SecurityException("File can't be writable or doesn't exist !!!");
+        try {
+            data = new StringBuilder();
+            data.append(dataInLines[0]).append('\n').append(dataInLines[1]);
+            if (map != null) {
+                for (Object i : map.keySet()) {
+                    data.append('\n').append(i).append("=").append(map.get(i));
+                }
+            }
             fileWriter = new FileWriter(file, false);
             fileWriter.write(String.valueOf(data));
             fileWriter.close();
@@ -100,7 +120,7 @@ public class MyProperties {
         }
     }
 
-    public void myStoreInNewFile (String url) {
+    public void storeInNewFile (String url) {
         if (url == null) {
             assert false;
             if (!url.isEmpty()) throw new IllegalArgumentException("URL can't be empty");
@@ -109,11 +129,13 @@ public class MyProperties {
             file = new File(url);
             if (!file.exists()) {
                 file.createNewFile();
-            };
+            }
             data = new StringBuilder();
-            data.append(title[0]).append('\n').append(title[1]);
-            for (Object i : map.keySet()){
-                data.append('\n').append(i).append("=").append(map.get(i));
+            data.append(dataInLines[0]).append('\n').append(dataInLines[1]);
+            if (map != null) {
+                for (Object i : map.keySet()){
+                    data.append('\n').append(i).append("=").append(map.get(i));
+                }
             }
             fileWriter = new FileWriter(file, false);
             fileWriter.write(String.valueOf(data));
