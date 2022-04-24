@@ -2,7 +2,7 @@ package ru.avalon.vergentev.j120.labwork2;
 import java.io.*;
 import java.util.*;
 
-//ЗАДАНИЕ 1 - СОЗДАЁМ КЛАСС MyProperties АНАЛОГИЧНЫЙ БИБЛИОТЕЧНОМУ Properties (использовал коллекцию HashMap)
+//ЗАДАНИЕ 1 - СОЗДАЁМ КЛАСС MyProperties АНАЛОГИЧНЫЙ БИБЛИОТЕЧНОМУ Properties (использовал коллекцию TreeMap)
 public class MyProperties {
     File file, fileAbsolute;
     FileReader fileReader;
@@ -27,7 +27,7 @@ public class MyProperties {
                 data.append((char)symbolExisting);
             }
             dataInLines = data.toString().split("\n", -1);  //запишем в массив каждую строку отдельно для того чтобы потом пропустить или вернуть заголовок
-            map = new HashMap<>();
+            map = new TreeMap<>();
             fileReader.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,11 +45,11 @@ public class MyProperties {
                 data.append((char)symbolExisting);
             }
             dataInLines = data.toString().split("\n", -1);  //запишем в массив каждую строку отдельно для того чтобы потом пропустить или вернуть заголовок
-            map = new HashMap<>();
+            map = new TreeMap<>();
             for (int i = 2; i < dataInLines.length; i++) {   //пропускаем заголовок и пустую строку
                 new StringBuilder().append(dataInLines[i]);
                 String[] temp = dataInLines[i].split("=");
-                map.put(temp[0], temp[1]);    //помешаем ключ и значение в подходящую коллекцию HashMap
+                map.put(temp[0], temp[1]);    //помешаем ключ и значение в подходящую коллекцию TreeMap
             }
             fileReader.close();
         } catch (IOException e) {

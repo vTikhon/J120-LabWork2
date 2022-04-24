@@ -9,7 +9,7 @@ public class TextChecker {
     FileWriter fileWriter;
     StringBuilder data;
     String[] dataEachWord;
-    Properties properties;
+    Map<String, String> map;
 
     public TextChecker (File file) {
         try {
@@ -53,21 +53,22 @@ public class TextChecker {
 
     public void getReports () {
         try {
-            properties = new Properties();
+            map = new TreeMap<>();
             for (int i = 0; i < dataEachWord.length; i++) {
                 int counter = 1;
                 for (int j = i + 1; j < dataEachWord.length; j++) {
-                    if (dataEachWord[i].equals(dataEachWord[j]) && !properties.containsKey(dataEachWord[i])) {
+                    if (dataEachWord[i].equals(dataEachWord[j]) && !map.containsKey(dataEachWord[i])) {
                         counter++;
                     }
                 }
-                if (!properties.containsKey(dataEachWord[i])) {
-                    properties.put(dataEachWord[i], String.valueOf(counter));
+                if (!map.containsKey(dataEachWord[i])) {
+                    map.put(dataEachWord[i], String.valueOf(counter));
                 }
             }
             StringBuilder temp = new StringBuilder();
-            for (Object i : properties.keySet()){
-                temp.append('\n').append(i).append("=").append(properties.get(i));
+            for (Object i : map.keySet()) {
+                double k = (100 * (Double.parseDouble(map.get(i)))) / dataEachWord.length;
+                temp.append('\n').append(i).append("=").append(map.get(i)).append(" <=> ").append(k).append("%");
             }
             File file = new File("report1.txt");
             fileWriter = new FileWriter(file, true);
