@@ -37,9 +37,6 @@ public class Main {
 
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>гюдюмхе 2<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         TextChecker textChecker = new TextChecker(new File("Pushkin-Kapitanskaya_dochka-ch2.txt"));
-//        textChecker.printFileDataInConsole();
-//        textChecker.printBuilder();
-//        textChecker.printWordsArray();
         textChecker.getReports();
 
 

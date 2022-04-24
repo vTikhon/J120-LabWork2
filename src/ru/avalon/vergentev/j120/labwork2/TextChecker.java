@@ -2,14 +2,15 @@ package ru.avalon.vergentev.j120.labwork2;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TextChecker {
-    File file;
+    File file, file2;
     FileReader fileReader;
     FileWriter fileWriter;
     StringBuilder data;
     String[] dataEachWord;
-    Map<String, String> map;
+    Map<String, Integer> map, sortedMap;
 
     public TextChecker (File file) {
         try {
@@ -53,6 +54,7 @@ public class TextChecker {
 
     public void getReports () {
         try {
+            //создаём коллекцию TreeMap, которая сортирует список по алфавиту (необходимо для report1.txt)
             map = new TreeMap<>();
             for (int i = 0; i < dataEachWord.length; i++) {
                 int counter = 1;
@@ -62,21 +64,43 @@ public class TextChecker {
                     }
                 }
                 if (!map.containsKey(dataEachWord[i])) {
-                    map.put(dataEachWord[i], String.valueOf(counter));
+                    map.put(dataEachWord[i], counter);
                 }
             }
+            //переводим отсортированную коллекцию по алфавиту без повторений в память StringBuilder
             StringBuilder temp = new StringBuilder();
             for (Object i : map.keySet()) {
-                double k = (100 * (Double.parseDouble(map.get(i)))) / dataEachWord.length;
+                double k = (double)(100 * (map.get(i))) / dataEachWord.length;
                 temp.append('\n').append(i).append("=").append(map.get(i)).append(" <=> ").append(k).append("%");
             }
+            //записываем в файл report1.txt
             File file = new File("report1.txt");
-            fileWriter = new FileWriter(file, true);
+            fileWriter = new FileWriter(file, false);
             fileWriter.append(temp);
+            fileWriter.close();
+
+            //для report2.txt переводим предыдущую коллекцию TreeMap в LinkedHashMap так, что теперь сортировка списка была по значению, а не по ключу
+            sortedMap = map.entrySet().stream()
+                    .sorted(Map.Entry.comparingByValue())
+                    .collect(Collectors.toMap(Map.Entry::getKey,
+                                                Map.Entry::getValue,
+                                                (e1, e2) -> e1, LinkedHashMap::new));
+            //переводим отсортированную коллекцию по значениям в память StringBuilder
+            StringBuilder temp2 = new StringBuilder();
+            for (Object i : sortedMap.keySet()) {
+                double k = (double)(100 * (sortedMap.get(i))) / dataEachWord.length;
+                temp2.append('\n').append(sortedMap.get(i)).append("=").append(i).append(" <=> ").append(k).append("%");
+            }
+            //записываем в файл report2.txt
+            File file2 = new File("report2.txt");
+            fileWriter = new FileWriter(file2, false);
+            fileWriter.append(temp2);
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
 }
