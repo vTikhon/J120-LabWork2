@@ -30,21 +30,6 @@ public class TextChecker {
         }
     }
 
-    //METHODS
-    public void printFileDataInConsole () {
-        if (!file.exists() || !file.canRead())  throw new SecurityException("File can't be readable or doesn't exist !!!");
-        try {
-            int symbolExisting;
-            fileReader = new FileReader(file, StandardCharsets.UTF_8);
-            while ((symbolExisting = fileReader.read()) != -1) {
-                System.out.print((char)symbolExisting);
-            }
-            fileReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void getReports () {
         try {
             //создаём коллекцию TreeMap, которая сортирует список по алфавиту (необходимо для report1.txt)
@@ -85,7 +70,7 @@ public class TextChecker {
                 double k = (double)(100 * (sortedMapByValue.get(i))) / dataEachWord.length;
                 temp.append('\n').append(sortedMapByValue.get(i)).append("=").append(i).append(" <=> ").append(k).append("%");
             }
-            dataEachString = temp.toString().toLowerCase().split("[\n]");
+            dataEachString = temp.toString().toLowerCase().split("\n");
             temp.setLength(0);
             for (int i = dataEachString.length-1; i >= 0; i--) {
                 temp.append('\n').append(dataEachString[i]);
