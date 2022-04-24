@@ -4,13 +4,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 public class TextChecker {
-    File file, file2;
+    File file;
     FileReader fileReader;
     FileWriter fileWriter;
     StringBuilder data;
-    String[] dataEachWord;
-    Map<String, Integer> map, sortedMap;
+    String[] dataEachWord, dataEachString;
+    Map<String, Integer> map, sortedMapByValue;
 
     public TextChecker (File file) {
         try {
@@ -44,14 +45,6 @@ public class TextChecker {
         }
     }
 
-    public void printBuilder () {
-        System.out.println(data);
-    }
-
-    public void printWordsArray () {
-        for (String i : dataEachWord) System.out.println(i);
-    }
-
     public void getReports () {
         try {
             //создаём коллекцию TreeMap, которая сортирует список по алфавиту (необходимо для report1.txt)
@@ -80,21 +73,27 @@ public class TextChecker {
             fileWriter.close();
 
             //для report2.txt переводим предыдущую коллекцию TreeMap в LinkedHashMap так, что теперь сортировка списка была по значению, а не по ключу
-            sortedMap = map.entrySet().stream()
+            sortedMapByValue = map.entrySet().stream()
                     .sorted(Map.Entry.comparingByValue())
                     .collect(Collectors.toMap(Map.Entry::getKey,
                                                 Map.Entry::getValue,
                                                 (e1, e2) -> e1, LinkedHashMap::new));
+
             //переводим отсортированную коллекцию по значениям в память StringBuilder
-            StringBuilder temp2 = new StringBuilder();
-            for (Object i : sortedMap.keySet()) {
-                double k = (double)(100 * (sortedMap.get(i))) / dataEachWord.length;
-                temp2.append('\n').append(sortedMap.get(i)).append("=").append(i).append(" <=> ").append(k).append("%");
+            temp.setLength(0);
+            for (Object i : sortedMapByValue.keySet()) {
+                double k = (double)(100 * (sortedMapByValue.get(i))) / dataEachWord.length;
+                temp.append('\n').append(sortedMapByValue.get(i)).append("=").append(i).append(" <=> ").append(k).append("%");
+            }
+            dataEachString = temp.toString().toLowerCase().split("[\n]");
+            temp.setLength(0);
+            for (int i = dataEachString.length-1; i >= 0; i--) {
+                temp.append('\n').append(dataEachString[i]);
             }
             //записываем в файл report2.txt
             File file2 = new File("report2.txt");
             fileWriter = new FileWriter(file2, false);
-            fileWriter.append(temp2);
+            fileWriter.append(temp);
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
