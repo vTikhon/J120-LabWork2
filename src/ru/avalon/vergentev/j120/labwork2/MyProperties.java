@@ -2,7 +2,7 @@ package ru.avalon.vergentev.j120.labwork2;
 import java.io.*;
 import java.util.*;
 
-//ЗАДАНИЕ 1 - СОЗДАЁМ КЛАСС MyProperties АНАЛОГИЧНЫЙ БИБЛИОТЕЧНОМУ Properties
+//ЗАДАНИЕ 1 - СОЗДАЁМ КЛАСС MyProperties АНАЛОГИЧНЫЙ БИБЛИОТЕЧНОМУ Properties (использовал коллекцию HashMap)
 public class MyProperties {
     File file, fileAbsolute;
     FileReader fileReader;
@@ -75,7 +75,6 @@ public class MyProperties {
         }
     }
 
-    //записываем в файл произвольные данные
     public void put (String key, String value) {
         map.put(key, value);
     }

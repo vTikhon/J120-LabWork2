@@ -9,6 +9,7 @@ public class TextChecker {
     FileWriter fileWriter;
     StringBuilder data;
     String[] dataEachWord;
+    Properties properties;
 
     public TextChecker (File file) {
         try {
@@ -52,13 +53,21 @@ public class TextChecker {
 
     public void getReports () {
         try {
-            StringBuilder temp = new StringBuilder();
+            properties = new Properties();
             for (int i = 0; i < dataEachWord.length; i++) {
                 int counter = 1;
                 for (int j = i + 1; j < dataEachWord.length; j++) {
-                    if (dataEachWord[i].equals(dataEachWord[j])) counter++;
+                    if (dataEachWord[i].equals(dataEachWord[j]) && !properties.containsKey(dataEachWord[i])) {
+                        counter++;
+                    }
                 }
-                temp.append(dataEachWord[i]).append(", ").append(counter).append('\n');
+                if (!properties.containsKey(dataEachWord[i])) {
+                    properties.put(dataEachWord[i], String.valueOf(counter));
+                }
+            }
+            StringBuilder temp = new StringBuilder();
+            for (Object i : properties.keySet()){
+                temp.append('\n').append(i).append("=").append(properties.get(i));
             }
             File file = new File("report1.txt");
             fileWriter = new FileWriter(file, true);
