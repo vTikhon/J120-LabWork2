@@ -8,7 +8,7 @@ public class MyProperties {
     FileReader fileReader;
     FileWriter fileWriter;
     Map<String, String> map;
-    StringBuilder data, title, dataWithoutTitle, dataTemp1, dataTemp2;
+    StringBuilder data, title, dataWithoutTitle;
     String[] dataEachString;
 
     //CONSTRUCTORS

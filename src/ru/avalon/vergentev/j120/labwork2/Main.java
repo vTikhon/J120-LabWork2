@@ -36,8 +36,8 @@ public class Main {
         myProperties2.printFileDataInConsole(); //выводим значения всего файла на консоль
 
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>ЗАДАНИЕ 2<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//        TextChecker textChecker = new TextChecker(new File("Pushkin-Kapitanskaya_dochka-ch2.txt"));
-//        textChecker.getReports();
+        TextChecker textChecker = new TextChecker(new File("Pushkin-Kapitanskaya_dochka-ch2.txt"));
+        textChecker.getReports();
 
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>ЗАДАНИЕ 3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 //        Decripter decripter = new Decripter(new File("script.txt"));
