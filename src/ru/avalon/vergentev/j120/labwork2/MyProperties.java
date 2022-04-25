@@ -58,7 +58,6 @@ public class MyProperties {
         dataEachString = data.toString().split("\n", -1);  //запишем в массив каждую строку отдельно для того, чтобы потом пропустить или вернуть заголовок
         map = new TreeMap<>();
         for (int i = 0; i < dataEachString.length; i++) {
-//            System.out.println(dataEachString[i].charAt(0) == '#');
             if (i == 0) {  // dataEachString[i].charAt(0) == '#'
                 title.append(dataEachString[i]);  //сохраняем заголовок с комментариями
             } else if (dataEachString[i].isEmpty()) {
@@ -93,7 +92,7 @@ public class MyProperties {
         System.out.println(data);
     }
 
-    //метод записывающий данные в файл
+    //метод записывающий данные в тот же файл, откуда он ранее был загружен
     public void store () {
         data = title;
         //считываем данные из актуальной коллекции и записываем её в строковые данные
@@ -103,9 +102,10 @@ public class MyProperties {
             }
         }
         //записываем данные в файл
-        writer (file, data);
+        writer(file, data);
     }
 
+    //метод записывающий данные в файл с заданным именем
     public void storeInNewFile (String url) {
         if (url.isEmpty()) throw new IllegalArgumentException("URL can't be empty");
         file = new File(url);

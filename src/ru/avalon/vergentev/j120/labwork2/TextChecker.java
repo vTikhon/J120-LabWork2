@@ -21,7 +21,7 @@ public class TextChecker {
 
     //METHODS
     //метод читающий файл и возвращающий данные в пам€ть компьютера
-    public StringBuilder reader (File file) {
+    public String[] reader (File file) {
         if (!file.exists() || !file.canRead())  throw new SecurityException("File can't be readable or doesn't exist !!!");
         int symbolExisting;
         try {
@@ -36,13 +36,11 @@ public class TextChecker {
         }
         //и сразу формируем массив отдельных слов с которым будем работать
         dataEachWord = data.toString().toLowerCase().split("[ |'{}.,:;!?@#є$%^&*()=+_><їЂЧЕ\t\b\n\r\f]+");
-        return data;
+        return dataEachWord;
     }
 
     //метод записывающий данные в файл
-    public void writer (String url, StringBuilder data) {
-        if (url.isEmpty()) throw new IllegalArgumentException("URL can't be empty");
-        file = new File(url);
+    public void writer (File file, StringBuilder data) {
         try {
             if (!file.exists()) file.createNewFile();
             if (!file.canWrite()) throw new SecurityException("File can't be writable or doesn't exist !!!");
@@ -69,13 +67,14 @@ public class TextChecker {
             }
         }
         //переводим отсортированную коллекцию по алфавиту без повторений в пам€ть StringBuilder
-        StringBuilder temp = new StringBuilder();
+        StringBuilder data = new StringBuilder();
         for (Object i : map.keySet()) {
             double k = (double)(100 * (map.get(i))) / dataEachWord.length;
-            temp.append('\n').append(i).append("=").append(map.get(i)).append(" <=> ").append(k).append("%");
+            data.append('\n').append(i).append("=").append(map.get(i)).append(" <=> ").append(k).append("%");
         }
         //записываем в файл report1.txt
-        writer("report1.txt", temp);
+        file = new File("report1.txt");
+        writer(file, data);
         //дл€ report2.txt переводим предыдущую коллекцию TreeMap в LinkedHashMap так, что теперь сортировка списка была по значению, а не по ключу
         sortedMapByValue = map.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue())
@@ -84,17 +83,18 @@ public class TextChecker {
                         (e1, e2) -> e1, LinkedHashMap::new));
 
         //переводим отсортированную коллекцию по значени€м в пам€ть StringBuilder
-        temp.setLength(0);
+        data.setLength(0);
         for (Object i : sortedMapByValue.keySet()) {
             double k = (double)(100 * (sortedMapByValue.get(i))) / dataEachWord.length;
-            temp.append('\n').append(sortedMapByValue.get(i)).append("=").append(i).append(" <=> ").append(k).append("%");
+            data.append('\n').append(sortedMapByValue.get(i)).append("=").append(i).append(" <=> ").append(k).append("%");
         }
-        dataEachString = temp.toString().toLowerCase().split("\n");
-        temp.setLength(0);
+        dataEachString = data.toString().toLowerCase().split("\n");
+        data.setLength(0);
         for (int i = dataEachString.length-1; i >= 0; i--) {
-            temp.append('\n').append(dataEachString[i]);
+            data.append('\n').append(dataEachString[i]);
         }
         //записываем в файл report2.txt
-        writer("report2.txt", temp);
+        file = new File("report2.txt");
+        writer(file, data);
     }
 }

@@ -35,18 +35,14 @@ public class Main {
         System.out.println('\n');
         myProperties2.storeInNewFile("MyPropertiesByUrl.txt"); //записываем в новый файл новые значения
         myProperties2.printFileDataInConsole(); //выводим значения всего файла на консоль
+        System.out.println('\n');
 
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>ЗАДАНИЕ 2<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        TextChecker textChecker = new TextChecker(new File("Pushkin-Kapitanskaya_dochka-ch2.txt"));
+        Scanner inputFileName = new Scanner(System.in);
+        System.out.println("Enter the URL of the file (Task2):");
+        String url = inputFileName.nextLine();
+        TextChecker textChecker = new TextChecker(new File(url));
         textChecker.getReports();
-
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>ЗАДАНИЕ 3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//        Decripter decripter = new Decripter(new File("script.txt"));
-//        decripter.printFileDataInConsole();
-//        decripter.printDecriptData();
-//        decripter.dataDecripter();
-
-
 
     }
 }
