@@ -58,14 +58,15 @@ public class MyProperties {
         dataEachString = data.toString().split("\n", -1);  //запишем в массив каждую строку отдельно для того, чтобы потом пропустить или вернуть заголовок
         map = new TreeMap<>();
         for (int i = 0; i < dataEachString.length; i++) {
-            if (i == 0) {  // <<<должно работать с условием (dataEachString[i].charAt(0) == '#') но не на каждом компе работает
+//            System.out.println(dataEachString[i].charAt(0) == '#');
+            if (i == 0) {  // dataEachString[i].charAt(0) == '#'
                 title.append(dataEachString[i]);  //сохраняем заголовок с комментариями
             } else if (dataEachString[i].isEmpty()) {
                 title.append('\n');  //сохраняем пустую строку
             } else {
                 dataWithoutTitle.append(dataEachString[i]).append('\n');
                 String[] temp = dataEachString[i].split("=");
-                map.put(temp[0], temp[1]);    //помешаем ключ и значение в подходящую коллекцию TreeMap
+                map.put(temp[0], temp[1]);    //помещаем ключ и значение в подходящую коллекцию TreeMap
             }
         }
         return data;
