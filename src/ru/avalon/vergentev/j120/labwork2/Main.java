@@ -13,10 +13,11 @@ public class Main {
         myProperties.store();
         myProperties.printFileDataInConsole(); //выводим значения всего файла на консоль
 
-        MyProperties myProperties2 = new MyProperties(new File("FileForTask1.txt")); //конструктор для считывания файла с данными
+        MyProperties myProperties2 = new MyProperties(new File("MyProperties.txt")); //конструктор для считывания файла с данными (файл от первого конструктора)
         myProperties2.put("key4", "value4");
         myProperties2.put("key5", "value5");
         myProperties2.put("key6", "value6");
+        myProperties2.store();
         myProperties2.printFileDataInConsole(); //выводим значения всего файла на консоль
         System.out.println('\n');
         System.out.println("The value of the key2 is:");
@@ -32,7 +33,7 @@ public class Main {
         System.out.println("Is the value of the key3 exists?");
         System.out.println(myProperties2.isValueExist("key3"));
         System.out.println('\n');
-        myProperties2.storeInNewFile("D:/fileForTask1.txt"); //записываем в новый файл новые значения
+        myProperties2.storeInNewFile("MyPropertiesByUrl.txt"); //записываем в новый файл новые значения
         myProperties2.printFileDataInConsole(); //выводим значения всего файла на консоль
 
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>ЗАДАНИЕ 2<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

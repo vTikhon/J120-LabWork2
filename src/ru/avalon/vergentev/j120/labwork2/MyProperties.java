@@ -14,15 +14,12 @@ public class MyProperties {
     //CONSTRUCTORS
     //конструктор по умолчанию создаёт файл с заголовком и пустой набор ключ=значение
     public MyProperties() {
-        try {
-            File file = new File("FileForTask1.txt");
-            fileAbsolute = file.getAbsoluteFile();
-            fileWriter = new FileWriter(file, false);
-            fileWriter.append("#").append(new Date().toString()).append('\n'); //некий заголовок и строка
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        title = new StringBuilder();
+        title.append("#").append(new Date()).append('\n');
+        String url = "MyProperties.txt";
+        File file = new File(url);
+        fileAbsolute = file.getAbsoluteFile();
+        writer (file, title);
         reader(file);  //читаем данные из файла в память компьютера
     }
 
@@ -43,7 +40,7 @@ public class MyProperties {
         if (isLinkOnFileEmpty(file)) {
             file = fileAbsolute;
         }
-        if (!file.exists() || !file.canRead())  throw new SecurityException("File can't be readable or doesn't exist !!!");
+        if (!file.exists() || !file.canRead()) throw new SecurityException("File can't be readable or doesn't exist !!!");
         try {
             int symbolExisting;
             fileReader = new FileReader(file);
@@ -58,7 +55,7 @@ public class MyProperties {
         //сортируем data (заголовок\рабочие данные\коллекция)
         title = new StringBuilder();
         dataWithoutTitle = new StringBuilder();
-        dataEachString = data.toString().split("\n", -1);  //запишем в массив каждую строку отдельно для того чтобы потом пропустить или вернуть заголовок
+        dataEachString = data.toString().split("\n", -1);  //запишем в массив каждую строку отдельно для того, чтобы потом пропустить или вернуть заголовок
         map = new TreeMap<>();
         for (int i = 0; i < dataEachString.length; i++) {
             if (i == 0) {  // <<<должно работать с условием (dataEachString[i].charAt(0) == '#') но не на каждом компе работает
@@ -72,6 +69,21 @@ public class MyProperties {
             }
         }
         return data;
+    }
+
+    public void writer (File file, StringBuilder data) {
+        try {
+            if (isLinkOnFileEmpty(file)) {
+                file = fileAbsolute;
+            }
+            if (!file.exists()) file.createNewFile();
+            if (!file.canWrite()) throw new SecurityException("File can't be writable or doesn't exist !!!");
+            fileWriter = new FileWriter(file, false);
+            fileWriter.write(String.valueOf(data));
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //вспомогательный метод который отслеживает содержимое файла выводя её в консоль
@@ -90,18 +102,7 @@ public class MyProperties {
             }
         }
         //записываем данные в файл
-        try {
-            if (isLinkOnFileEmpty(file)) {
-                file = fileAbsolute;
-            }
-            if (!file.exists()) file.createNewFile();
-            if (!file.canWrite()) throw new SecurityException("File can't be writable or doesn't exist !!!");
-            fileWriter = new FileWriter(file, false);
-            fileWriter.write(String.valueOf(data));
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        writer (file, data);
     }
 
     public void storeInNewFile (String url) {
