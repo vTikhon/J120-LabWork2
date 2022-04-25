@@ -1,10 +1,10 @@
 package ru.avalon.vergentev.j120.labwork2;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
-
+//«јƒјЌ»≈ 2 - класс считающий повторени€ в тексте
 public class TextChecker {
     File file;
     FileReader fileReader;
@@ -13,21 +13,30 @@ public class TextChecker {
     String[] dataEachWord, dataEachString;
     Map<String, Integer> map, sortedMapByValue;
 
+    //CONSTRUCTORS
     public TextChecker (File file) {
+        this.file = file;
+        reader(file);
+    }
+
+    //METHODS
+    //метод читающий файл и возвращающий данные в пам€ть компьютера
+    public StringBuilder reader (File file) {
+        if (!file.exists() || !file.canRead())  throw new SecurityException("File can't be readable or doesn't exist !!!");
+        int symbolExisting;
         try {
-            this.file = file;
-            if (!file.exists() || !file.canRead()) throw new SecurityException("File doesn't exist or can't be readable !!!");
-            int symbolExisting;
             fileReader = new FileReader(file, StandardCharsets.UTF_8);
             data = new StringBuilder();
             while ((symbolExisting = fileReader.read()) != -1) {
                 data.append((char)symbolExisting);
             }
-            dataEachWord = data.toString().toLowerCase().split("[ |'{}.,:;!?@#є$%^&*()=+_><їЂЧЕ\t\b\n\r\f]+");
             fileReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //и сразу формируем массив отдельных слов с которым будем работать
+        dataEachWord = data.toString().toLowerCase().split("[ |'{}.,:;!?@#є$%^&*()=+_><їЂЧЕ\t\b\n\r\f]+");
+        return data;
     }
 
     public void getReports () {

@@ -1,9 +1,6 @@
 package ru.avalon.vergentev.j120.labwork2;
 import java.io.*;
-import java.sql.SQLOutput;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class Decripter {
     File file;
@@ -63,7 +60,7 @@ public class Decripter {
         //убираем строки содержащие комментарии и пустые строки
         dataWithoutComments = new StringBuilder();
         for (String i : dataEachString) {
-            if (!(i.charAt(0)=='#') && !(i.length() == 1)) {
+            if (i.charAt(0) != '#' && !i.isEmpty()) {
                 dataWithoutComments.append(i).append('\n');
             }
         }
