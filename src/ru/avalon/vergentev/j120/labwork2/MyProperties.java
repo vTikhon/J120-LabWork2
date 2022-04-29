@@ -2,7 +2,7 @@ package ru.avalon.vergentev.j120.labwork2;
 import java.io.*;
 import java.util.*;
 
-//ЗАДАНИЕ 1 - СОЗДАЁМ КЛАСС MyProperties АНАЛОГИЧНЫЙ БИБЛИОТЕЧНОМУ Properties (использовал коллекцию TreeMap)
+//Р—РђР”РђРќРР• 1 - РЎРћР—Р”РђРЃРњ РљР›РђРЎРЎ MyProperties РђРќРђР›РћР“РР§РќР«Р™ Р‘РР‘Р›РРћРўР•Р§РќРћРњРЈ Properties (РёСЃРїРѕР»СЊР·РѕРІР°Р» РєРѕР»Р»РµРєС†РёСЋ TreeMap)
 public class MyProperties {
     File file, fileAbsolute;
     FileReader fileReader;
@@ -12,7 +12,7 @@ public class MyProperties {
     String[] dataEachString;
 
     //CONSTRUCTORS
-    //конструктор по умолчанию создаёт файл с заголовком и пустой набор ключ=значение
+    //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ СЃРѕР·РґР°С‘С‚ С„Р°Р№Р» СЃ Р·Р°РіРѕР»РѕРІРєРѕРј Рё РїСѓСЃС‚РѕР№ РЅР°Р±РѕСЂ РєР»СЋС‡=Р·РЅР°С‡РµРЅРёРµ
     public MyProperties() {
         title = new StringBuilder();
         title.append("#").append(new Date()).append('\n');
@@ -20,13 +20,13 @@ public class MyProperties {
         File file = new File(url);
         fileAbsolute = file.getAbsoluteFile();
         writer (file, title);
-        reader(file);  //читаем данные из файла в память компьютера
+        reader(file);  //С‡РёС‚Р°РµРј РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р° РІ РїР°РјСЏС‚СЊ РєРѕРјРїСЊСЋС‚РµСЂР°
     }
 
-    //конструктор читает указанный файл и принимает наборы ключ=значение
+    //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ С‡РёС‚Р°РµС‚ СѓРєР°Р·Р°РЅРЅС‹Р№ С„Р°Р№Р» Рё РїСЂРёРЅРёРјР°РµС‚ РЅР°Р±РѕСЂС‹ РєР»СЋС‡=Р·РЅР°С‡РµРЅРёРµ
     public MyProperties(File file) {
         this.file = file;
-        reader(file);  //читаем данные из файла в память компьютера
+        reader(file);  //С‡РёС‚Р°РµРј РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р° РІ РїР°РјСЏС‚СЊ РєРѕРјРїСЊСЋС‚РµСЂР°
     }
 
 
@@ -35,7 +35,7 @@ public class MyProperties {
         return file == null;
     }
 
-    //метод читающий файл и возвращающий данные в память компьютера
+    //РјРµС‚РѕРґ С‡РёС‚Р°СЋС‰РёР№ С„Р°Р№Р» Рё РІРѕР·РІСЂР°С‰Р°СЋС‰РёР№ РґР°РЅРЅС‹Рµ РІ РїР°РјСЏС‚СЊ РєРѕРјРїСЊСЋС‚РµСЂР°
     public StringBuilder reader (File file) {
         if (isLinkOnFileEmpty(file)) {
             file = fileAbsolute;
@@ -52,20 +52,20 @@ public class MyProperties {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //сортируем data (заголовок\рабочие данные\коллекция)
+        //СЃРѕСЂС‚РёСЂСѓРµРј data (Р·Р°РіРѕР»РѕРІРѕРє\СЂР°Р±РѕС‡РёРµ РґР°РЅРЅС‹Рµ\РєРѕР»Р»РµРєС†РёСЏ)
         title = new StringBuilder();
         dataWithoutTitle = new StringBuilder();
-        dataEachString = data.toString().split("\n", -1);  //запишем в массив каждую строку отдельно для того, чтобы потом пропустить или вернуть заголовок
+        dataEachString = data.toString().split("\n", -1);  //Р·Р°РїРёС€РµРј РІ РјР°СЃСЃРёРІ РєР°Р¶РґСѓСЋ СЃС‚СЂРѕРєСѓ РѕС‚РґРµР»СЊРЅРѕ РґР»СЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ РїРѕС‚РѕРј РїСЂРѕРїСѓСЃС‚РёС‚СЊ РёР»Рё РІРµСЂРЅСѓС‚СЊ Р·Р°РіРѕР»РѕРІРѕРє
         map = new TreeMap<>();
         for (int i = 0; i < dataEachString.length; i++) {
             if (i == 0) {  // dataEachString[i].charAt(0) == '#'
-                title.append(dataEachString[i]);  //сохраняем заголовок с комментариями
+                title.append(dataEachString[i]);  //СЃРѕС…СЂР°РЅСЏРµРј Р·Р°РіРѕР»РѕРІРѕРє СЃ РєРѕРјРјРµРЅС‚Р°СЂРёСЏРјРё
             } else if (dataEachString[i].isEmpty()) {
-                title.append('\n');  //сохраняем пустую строку
+                title.append('\n');  //СЃРѕС…СЂР°РЅСЏРµРј РїСѓСЃС‚СѓСЋ СЃС‚СЂРѕРєСѓ
             } else {
                 dataWithoutTitle.append(dataEachString[i]).append('\n');
                 String[] temp = dataEachString[i].split("=");
-                map.put(temp[0], temp[1]);    //помещаем ключ и значение в подходящую коллекцию TreeMap
+                map.put(temp[0], temp[1]);    //РїРѕРјРµС‰Р°РµРј РєР»СЋС‡ Рё Р·РЅР°С‡РµРЅРёРµ РІ РїРѕРґС…РѕРґСЏС‰СѓСЋ РєРѕР»Р»РµРєС†РёСЋ TreeMap
             }
         }
         return data;
@@ -86,26 +86,26 @@ public class MyProperties {
         }
     }
 
-    //вспомогательный метод который отслеживает содержимое файла выводя её в консоль
+    //РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Р№ РјРµС‚РѕРґ РєРѕС‚РѕСЂС‹Р№ РѕС‚СЃР»РµР¶РёРІР°РµС‚ СЃРѕРґРµСЂР¶РёРјРѕРµ С„Р°Р№Р»Р° РІС‹РІРѕРґСЏ РµС‘ РІ РєРѕРЅСЃРѕР»СЊ
     public void printFileDataInConsole () {
         reader(file);
         System.out.println(data);
     }
 
-    //метод записывающий данные в тот же файл, откуда он ранее был загружен
+    //РјРµС‚РѕРґ Р·Р°РїРёСЃС‹РІР°СЋС‰РёР№ РґР°РЅРЅС‹Рµ РІ С‚РѕС‚ Р¶Рµ С„Р°Р№Р», РѕС‚РєСѓРґР° РѕРЅ СЂР°РЅРµРµ Р±С‹Р» Р·Р°РіСЂСѓР¶РµРЅ
     public void store () {
         data = title;
-        //считываем данные из актуальной коллекции и записываем её в строковые данные
+        //СЃС‡РёС‚С‹РІР°РµРј РґР°РЅРЅС‹Рµ РёР· Р°РєС‚СѓР°Р»СЊРЅРѕР№ РєРѕР»Р»РµРєС†РёРё Рё Р·Р°РїРёСЃС‹РІР°РµРј РµС‘ РІ СЃС‚СЂРѕРєРѕРІС‹Рµ РґР°РЅРЅС‹Рµ
         if (map != null) {
             for (Object i : map.keySet()) {
                 data.append('\n').append(i).append("=").append(map.get(i));
             }
         }
-        //записываем данные в файл
+        //Р·Р°РїРёСЃС‹РІР°РµРј РґР°РЅРЅС‹Рµ РІ С„Р°Р№Р»
         writer(file, data);
     }
 
-    //метод записывающий данные в файл с заданным именем
+    //РјРµС‚РѕРґ Р·Р°РїРёСЃС‹РІР°СЋС‰РёР№ РґР°РЅРЅС‹Рµ РІ С„Р°Р№Р» СЃ Р·Р°РґР°РЅРЅС‹Рј РёРјРµРЅРµРј
     public void storeInNewFile (String url) {
         if (url.isEmpty()) throw new IllegalArgumentException("URL can't be empty");
         file = new File(url);

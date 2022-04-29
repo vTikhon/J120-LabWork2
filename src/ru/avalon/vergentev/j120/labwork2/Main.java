@@ -1,48 +1,40 @@
 package ru.avalon.vergentev.j120.labwork2;
 import java.io.*;
-import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>ЗАДАНИЕ 1<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        MyProperties myProperties = new MyProperties(); //согласно заданию конструктор по умолчанию создаёт файл с заголовком
-        myProperties.printFileDataInConsole(); //выводим значения всего файла на консоль
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>TASK 1<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        MyProperties myProperties = new MyProperties();
+        myProperties.printFileDataInConsole(); //РїРµС‡Р°С‚Р°РµРј РІ РєРѕРЅСЃРѕР»СЊ РІСЃС‘ СЃРѕРґРµСЂР¶РёРјРѕРµ С„Р°Р№Р»Р°
         myProperties.put("key1", "value1");
         myProperties.put("key2", "value2");
         myProperties.put("key3", "value3");
-        myProperties.store();
-        myProperties.printFileDataInConsole(); //выводим значения всего файла на консоль
+        myProperties.store(); //Р·Р°РїРёСЃС‹РІР°РµРј РґР°РЅРЅС‹Рµ РІ С„Р°Р№Р»
+        myProperties.printFileDataInConsole(); //РїРµС‡Р°С‚Р°РµРј РІ РєРѕРЅСЃРѕР»СЊ РІСЃС‘ СЃРѕРґРµСЂР¶РёРјРѕРµ С„Р°Р№Р»Р°
 
-        MyProperties myProperties2 = new MyProperties(new File("MyProperties.txt")); //конструктор для считывания файла с данными (файл от первого конструктора)
+        MyProperties myProperties2 = new MyProperties(new File("MyProperties.txt"));
         myProperties2.put("key4", "value4");
         myProperties2.put("key5", "value5");
         myProperties2.put("key6", "value6");
-        myProperties2.store();
-        myProperties2.printFileDataInConsole(); //выводим значения всего файла на консоль
+        myProperties2.store(); //Р·Р°РїРёСЃС‹РІР°РµРј РґР°РЅРЅС‹Рµ РІ С„Р°Р№Р»
+        myProperties2.printFileDataInConsole(); //РїРµС‡Р°С‚Р°РµРј РІ РєРѕРЅСЃРѕР»СЊ РІСЃС‘ СЃРѕРґРµСЂР¶РёРјРѕРµ С„Р°Р№Р»Р°
         System.out.println('\n');
         System.out.println("The value of the key2 is:");
-        System.out.println(myProperties2.get("key2")); //выводим значение ключа2
-        myProperties2.replace("key2", "value44"); //изменяем значение ключа2
+        System.out.println(myProperties2.get("key2")); //РїРѕРёСЃРє РїРѕ РєР»СЋС‡Сѓ
+        myProperties2.replace("key2", "value44"); //Р·Р°РјРµРЅР° Р·РЅР°С‡РµРЅРёР№ РїРѕ РєР»СЋС‡Сѓ
         System.out.println("The value of the key2 is:");
-        System.out.println(myProperties2.get("key2")); //выводим новое значение ключа2
-        myProperties2.remove("key2");
+        System.out.println(myProperties2.get("key2")); //СЃРЅРѕРІР° РїСЂРѕРІРµСЂСЏРµРј Р·РЅР°С‡РµРЅРёРµ (СѓР¶Рµ РёР·РјРµРЅС‘РЅРЅРѕРµ)
+        myProperties2.remove("key2"); //СѓРґР°Р»СЏРµРј Р·РЅР°С‡РµРЅРёРµ РїРѕ РєР»СЋС‡Сѓ
         System.out.println("The value of the key2 is:");
-        System.out.println(myProperties2.get("key2")); //выводим новое значение ключа2
+        System.out.println(myProperties2.get("key2")); //СЃРЅРѕРІР° РїСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РµРіРѕ СѓРґР°Р»РёР»Рё
         System.out.println("Is the value of the key2 exists?");
         System.out.println(myProperties2.isValueExist("key2"));
         System.out.println("Is the value of the key3 exists?");
         System.out.println(myProperties2.isValueExist("key3"));
         System.out.println('\n');
-        myProperties2.storeInNewFile("MyPropertiesByUrl.txt"); //записываем в новый файл новые значения
-        myProperties2.printFileDataInConsole(); //выводим значения всего файла на консоль
+        myProperties2.storeInNewFile("MyPropertiesByUrl.txt"); //Р·Р°РїРёСЃС‹РІР°РµРј РґР°РЅРЅС‹Рµ РІ С„Р°Р№Р» РїРѕ URL РёР»Рё РЅР°Р·РІР°РЅРёСЋ
+        myProperties2.printFileDataInConsole(); //РїРµС‡Р°С‚Р°РµРј РІ РєРѕРЅСЃРѕР»СЊ РІСЃС‘ СЃРѕРґРµСЂР¶РёРјРѕРµ С„Р°Р№Р»Р°
         System.out.println('\n');
-
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>ЗАДАНИЕ 2<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        Scanner inputFileName = new Scanner(System.in);
-        System.out.println("Enter the URL of the file (Task2):");
-        String url = inputFileName.nextLine();
-        TextChecker textChecker = new TextChecker(new File(url));
-        textChecker.getReports();
 
     }
 }
